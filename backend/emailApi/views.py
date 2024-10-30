@@ -7,12 +7,6 @@ from rest_framework import status, viewsets
 
 
 # Create your views here.
-# class Subscribe(viewsets.ModelViewSet):
-#     queryset = Subscribers.objects.all()
-#     serializer_class = SubSerializer
-
-
-
 class Subscribe(APIView):
     def get(self, request, id=None):
         if id is None:
