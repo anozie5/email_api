@@ -19,12 +19,13 @@ class Subscribe(APIView):
             sub = SubSerializer(suber)
             return Response(sub.data, status=status.HTTP_200_OK)
         
-        return Response({'message': f'Subscription for {sub.email} is not found', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': f'Subscription for {suber.email} is not found', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
-        sub = SubSerializer(request.data)
+        sub = SubSerializer(data=request.data)
         if sub.is_valid():
             sub.save()
-            return Response(f"{sub.email}'s subscription successful", status=status.HTTP_201_CREATED)
-        return Response({'message': f'Subscription for {sub.email} failed', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
+            email = sub.validated_data['email']
+            return Response(f"{email}'s subscription successful", status=status.HTTP_201_CREATED)
+        return Response({'message': f'Subscription for {email} failed', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
 
