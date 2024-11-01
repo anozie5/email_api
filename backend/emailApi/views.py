@@ -3,11 +3,20 @@ from .models import *
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, viewsets
+from rest_framework import status, permissions
 
 
 # Create your views here.
 class Subscribe(APIView):
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [permissions.IsAuthenticated()]
+
+        elif self.request.method == 'POST':
+            return [permissions.AllowAny()]
+            
+        return super().get_permissions()
+    
     def get(self, request, id=None):
         if id is None:
             suber = Subscribers.objects.all()
@@ -19,7 +28,7 @@ class Subscribe(APIView):
             sub = SubSerializer(suber)
             return Response(sub.data, status=status.HTTP_200_OK)
         
-        return Response({'message': f'Subscription for {suber.email} is not found', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message': f'Subscription for {sub.email} is not found', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
         sub = SubSerializer(data=request.data)
@@ -29,3 +38,4 @@ class Subscribe(APIView):
             return Response(f"{email}'s subscription successful", status=status.HTTP_201_CREATED)
         return Response({'message': f'Subscription for {email} failed', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
 
+ 
