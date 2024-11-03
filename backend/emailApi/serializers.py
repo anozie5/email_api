@@ -46,7 +46,7 @@ class PrivateLoginSerial(TokenObtainPairSerializer):
             try:
                 user = User.objects.get(email=email)
             except User.DoesNotExist:
-                raise serializers.ValidationError('User with this email does not exist.')
+                raise serializers.ValidationError(f'Private user with {email} does not exist.')
 
             if not user.check_password(password):
                 raise serializers.ValidationError('Incorrect password.')
