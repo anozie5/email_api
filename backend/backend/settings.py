@@ -111,7 +111,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL = 'emailApi.Private'
+AUTH_USER_MODEL = 'emailApi.Rotate'
 
 
 ROOT_URLCONF = 'backend.urls'
