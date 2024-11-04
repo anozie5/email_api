@@ -15,9 +15,9 @@ class SubSerializer(serializers.ModelSerializer):
 
 class PrivateSignUpSerial(serializers.ModelSerializer):
     class Meta:
-        model = Rotate
+        model = User
         fields = ['username', 'email', 'password']
-        extra_kwargs = {'password' : {'read_only': True, 'min_length': 8},}
+        extra_kwargs = {'password' : {'write_only': True, 'min_length': 8},}
 
     def create(self, validated_data):
         user = super().create(validated_data)
@@ -35,7 +35,7 @@ class PrivateLoginSerial(TokenObtainPairSerializer):
         return token
 
     class Meta:
-        model = Rotate
+        model = User
         fields = ['email', 'password']
 
     def validate(self, attrs):
@@ -44,8 +44,8 @@ class PrivateLoginSerial(TokenObtainPairSerializer):
 
         if email and password:
             try:
-                user = Rotate.objects.get(email=email)
-            except Rotate.DoesNotExist:
+                user = User.objects.get(email=email)
+            except User.DoesNotExist:
                 raise serializers.ValidationError(f'Private user with {email} does not exist.')
 
             if not user.check_password(password):

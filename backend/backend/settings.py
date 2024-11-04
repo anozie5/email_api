@@ -66,7 +66,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'emailApi.apps.EmailapiConfig',
+    'emailApi',
     'corsheaders',
     'rest_framework',
     'rest_framework_simplejwt',
@@ -111,8 +111,7 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-AUTH_USER_MODEL = 'emailApi.Rotate'
-
+AUTH_USER_MODEL = 'emailApi.User'
 
 ROOT_URLCONF = 'backend.urls'
 

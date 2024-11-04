@@ -3,7 +3,7 @@ from .models import *
 from .serializers import *
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status, generics
+from rest_framework import status, generics, permissions
 from rest_framework.permissions import AllowAny
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
@@ -13,17 +13,19 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Create your views here.
 class Subscribe(APIView):
-    # def get_permissions(self):
-    #     if self.request.method == 'GET':
-    #         return [permissions.IsAuthenticated()]
+    authentication_classes = [JWTAuthentication]
+    
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return [permissions.IsAuthenticated()]
 
-    #     elif self.request.method == 'POST':
-    #         return [permissions.AllowAny()]
+        elif self.request.method == 'POST':
+            return [permissions.AllowAny()]
             
-    #     return super().get_permissions()
+        return super().get_permissions()
     
     def get(self, request, id=None):
-        self.authentication_classes = [JWTAuthentication]
+        #self.authentication_classes = [JWTAuthentication]
 
         if id is None:
             suber = Subscribers.objects.all()
@@ -38,7 +40,7 @@ class Subscribe(APIView):
         return Response({'message': f'Subscription for {sub.email} is not found', 'errors': sub.errors}, status=status.HTTP_400_BAD_REQUEST)
 
     def post(self, request):
-        self.permission_classes = [AllowAny]
+        #self.permission_classes = [AllowAny]
 
         sub = SubSerializer(data=request.data)
         if sub.is_valid():
@@ -51,7 +53,7 @@ class Subscribe(APIView):
 
 # for your private usage
 class PrivateSignUpView(generics.CreateAPIView):
-    queryset = Rotate.objects.all()
+    queryset = User.objects.all()
     serializer_class = PrivateSignUpSerial
 
     permission_classes = [AllowAny]
