@@ -51,7 +51,7 @@ class Subscribe(APIView):
 
 # for your private usage
 class PrivateSignUpView(generics.CreateAPIView):
-    queryset = User.objects.all()
+    queryset = Private.objects.all()
     serializer_class = PrivateSignUpSerial
 
     permission_classes = [AllowAny]
