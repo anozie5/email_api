@@ -25,16 +25,15 @@ from decouple import config
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
 # CORS Settings
-# CORS_ALLOWED_ORIGINS = [
-#     "https://your-frontend.com",
-#     "https://another-trusted-site.com",
-# ]
-CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWED_ORIGINS = [
+    "https://walkitapp.com",
+]
+#CORS_ALLOW_ALL_ORIGINS = True
 
 CORS_ALLOW_CREDENTIALS = True  # Allows cookies and authentication tokens
 CORS_ALLOW_HEADERS = [
@@ -52,8 +51,7 @@ CORS_EXPOSE_HEADERS = ["Content-Length", "X-My-Custom-Header"]
 
 # Optional Security Enhancement (not CORS-related)
 CSRF_TRUSTED_ORIGINS = [
-    "https://your-frontend.com",
-    "https://another-trusted-site.com",
+    "https://walkitapp.com",
 ]
 
 
@@ -96,7 +94,6 @@ REST_FRAMEWORK = {
 }
 
 from datetime import timedelta
-import os
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
@@ -104,7 +101,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',),
     'ROTATE_REFRESH_TOKENS': True,
     'ALGORITHM': 'HS256',
-    # 'SIGNING_KEY': os.environ.get('JWT_SECRET_KEY'),
 }
 
 AUTHENTICATION_BACKENDS = (
