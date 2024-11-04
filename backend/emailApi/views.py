@@ -14,7 +14,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 # Create your views here.
 class Subscribe(APIView):
     authentication_classes = [JWTAuthentication]
-    
+
     def get_permissions(self):
         if self.request.method == 'GET':
             return [permissions.IsAuthenticated()]
@@ -25,7 +25,6 @@ class Subscribe(APIView):
         return super().get_permissions()
     
     def get(self, request, id=None):
-        #self.authentication_classes = [JWTAuthentication]
 
         if id is None:
             suber = Subscribers.objects.all()
