@@ -109,6 +109,13 @@ AUTHENTICATION_BACKENDS = (
 
 AUTH_USER_MODEL = 'emailApi.User'
 
+import os
+if os.getenv("RENDER"):
+    DEBUG = False
+    ALLOWED_HOSTS = ["*"]  # Or specify your Render domain here
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+    STATIC_URL = '/static/'
+
 ROOT_URLCONF = 'backend.urls'
 
 TEMPLATES = [
